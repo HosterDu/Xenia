@@ -1,4 +1,4 @@
-package com.example.config.OAuth
+package com.example.util.OAuth
 
 import com.example.user.model.User
 

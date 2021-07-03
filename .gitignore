@@ -1,0 +1,6 @@
+backend/.gradle/**
+backend/build/**
+backend/.idea/**
+
+# Cache of project
+backend/.gradletasknamecache

@@ -1,7 +1,7 @@
 package com.example.user.repository
 
 import com.example.config.Database
-import com.example.config.OAuth.GoogleUserProfile
+import com.example.util.OAuth.GoogleUserProfile
 import com.example.user.model.User
 import com.example.user.model.UserType
 import com.example.user.model.Users
@@ -14,7 +14,7 @@ import java.util.*
 class UserRepository {
     private fun toUser(row: ResultRow): User =
         User(
-            user_id = row[Users.user_id],
+            id = row[Users.id],
             given_name = row[Users.given_name],
             family_name = row[Users.family_name],
             email = row[Users.email],
@@ -24,11 +24,7 @@ class UserRepository {
 
     suspend fun readOrCreateAuthenticatedUser(providerProfile: GoogleUserProfile): User {
         val existingUser = retrieveUserByEmail(providerProfile)
-        return if (existingUser == null) {
-            createUser(providerProfile)
-        } else {
-            existingUser
-        }
+        return existingUser ?: createUser(providerProfile)
 
     }
 
@@ -45,7 +41,7 @@ class UserRepository {
         try {
              Database.dbQuery {
                 Users.insert {
-                    it[user_id] = UUID.randomUUID()
+                    it[id] = UUID.randomUUID()
                     it[given_name] = providerProfile.given_name
                     it[family_name] = providerProfile.family_name
                     it[email] = providerProfile.email

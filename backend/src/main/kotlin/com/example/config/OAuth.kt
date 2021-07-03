@@ -1,10 +1,11 @@
 package com.example.config
 
-import com.example.config.OAuth.GoogleClient
-import com.example.config.OAuth.GoogleUserProfile
-import com.example.config.OAuth.UserSession
+import com.example.util.OAuth.GoogleClient
+import com.example.util.OAuth.GoogleUserProfile
+import com.example.util.OAuth.UserSession
 import com.example.user.model.User
 import com.example.user.repository.UserRepository
+import com.example.util.Session.SessionHandler
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.client.*
@@ -15,6 +16,7 @@ import io.ktor.html.*
 import io.ktor.http.*
 import io.ktor.locations.*
 import io.ktor.request.*
+import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 import kotlinx.html.*
@@ -55,6 +57,7 @@ val loginProviders = listOf(
 
 private val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4)
 
+@OptIn(KtorExperimentalLocationsAPI::class)
 fun Application.oAuth() {
     oAuthWithDeps(
         oauthHttpClient = HttpClient(Apache).apply {
@@ -65,7 +68,7 @@ fun Application.oAuth() {
     )
 }
 
-@KtorExperimentalLocationsAPI
+@OptIn(KtorExperimentalLocationsAPI::class)
 fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
     val authOauthForLogin = "authOauthForLogin"
     val userRepository = UserRepository()
@@ -82,29 +85,12 @@ fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
 
 
     routing {
-        get<index> {
-            call.respondHtml {
-                head {
-                    title { +"index page" }
-                }
-                body {
-                    h1 {
-                        +"Try to login"
-                    }
-                    p {
-                        a(href = locations.href(login())) {
-                            +"Login"
-                        }
-                    }
-                }
-            }
-        }
-
         authenticate(authOauthForLogin) {
             location<login>() {
                 param("error") {
                     handle {
-                        call.loginFailedPage(call.parameters.getAll("error").orEmpty())
+                        call.respond("Error when logging in")
+
                     }
                 }
                 handle {
@@ -124,10 +110,10 @@ fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
                         }
                         if (providerProfile != null) {
                             val user = userRepository.readOrCreateAuthenticatedUser(providerProfile)
-                            call.sessions.set(UserSession(user = user, count = 0))
+                            SessionHandler.setUserSession(call, user)
                         }
-                        println(call.sessions.get<UserSession>()?.user)
-                        call.loggedInSuccessResponse(principal)
+                        println(SessionHandler.getUserSession(call))
+                        call.respond("Logged in successfully")
                     } else {
                         call.loginPage()
                     }
@@ -138,17 +124,12 @@ fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
 }
 
 
-
-@KtorExperimentalLocationsAPI
-@Location("/")
-class index()
-
-@KtorExperimentalLocationsAPI
-@Location("/login/{type?}")
+@OptIn(KtorExperimentalLocationsAPI::class)
+@Location("/api/login/{type?}")
 class login(val type: String = "")
 
 fun <T : Any> ApplicationCall.redirectUrl(t: T, secure: Boolean = true): String {
-    val hostPort = request.host()!! + request.port().let { port -> if (port == 80) "" else ":$port" }
+    val hostPort = request.host() + request.port().let { port -> if (port == 80) "" else ":$port" }
     val protocol = when {
         secure -> "https"
         else -> "http"
@@ -156,7 +137,7 @@ fun <T : Any> ApplicationCall.redirectUrl(t: T, secure: Boolean = true): String 
     return "$protocol://$hostPort${application.locations.href(t)}"
 }
 
-@KtorExperimentalLocationsAPI
+@OptIn(KtorExperimentalLocationsAPI::class)
 suspend fun ApplicationCall.loginPage() {
     respondHtml {
         head {
@@ -173,41 +154,6 @@ suspend fun ApplicationCall.loginPage() {
                         +p.key
                     }
                 }
-            }
-        }
-    }
-}
-
-suspend fun ApplicationCall.loginFailedPage(errors: List<String>) {
-    respondHtml {
-        head {
-            title { +"Login with" }
-        }
-        body {
-            h1 {
-                +"Login error"
-            }
-
-            for (e in errors) {
-                p {
-                    +e
-                }
-            }
-        }
-    }
-}
-
-suspend fun ApplicationCall.loggedInSuccessResponse(callback: OAuthAccessTokenResponse) {
-    respondHtml {
-        head {
-            title { +"Logged in" }
-        }
-        body {
-            h1 {
-                +"You are logged in"
-            }
-            p {
-                +"Your token is $callback"
             }
         }
     }

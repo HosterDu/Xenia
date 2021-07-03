@@ -1,10 +1,13 @@
 package com.example.config
 
-import com.example.config.OAuth.UserSession
+import com.example.util.Exception.UnauthorizedException
+import com.example.util.OAuth.UserSession
 import io.ktor.http.*
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.locations.*
+import io.ktor.response.*
+import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.sessions.*
 
@@ -27,5 +30,13 @@ fun Application.settings() {
     install(CallLogging)
     install(Sessions) {
         cookie<UserSession>("user_session")
+    }
+    install(StatusPages) {
+        exception<UnauthorizedException> { cause ->
+            call.respond(HttpStatusCode.Unauthorized)
+        }
+    }
+    install(Routing) {
+        routing()
     }
 }

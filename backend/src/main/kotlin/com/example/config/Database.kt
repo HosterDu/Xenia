@@ -1,5 +1,6 @@
 package com.example.config
 
+import com.example.event.model.Events
 import com.example.user.model.Users
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -15,6 +16,7 @@ object Database {
         Database.connect(hikari())
         transaction {
             create(Users)
+            create(Events)
         }
     }
 

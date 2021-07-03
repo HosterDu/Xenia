@@ -1,4 +1,4 @@
-package com.example.config.OAuth
+package com.example.util.OAuth
 
 import io.ktor.auth.*
 import io.ktor.client.*
