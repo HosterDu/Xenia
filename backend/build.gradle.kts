@@ -4,6 +4,7 @@ val exposed_version: String by project
 val hikari_version: String by project
 val postgres_version: String by project
 val logback_version: String by project
+val nanoid_version: String by project
 
 plugins {
     application
@@ -43,6 +44,8 @@ dependencies {
 
     implementation("com.zaxxer:HikariCP:$hikari_version")
     implementation("org.postgresql:postgresql:$postgres_version")
+
+    implementation("com.aventrix.jnanoid:jnanoid:$nanoid_version")
 
     implementation("ch.qos.logback:logback-classic:$logback_version")
 

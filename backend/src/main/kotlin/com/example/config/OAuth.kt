@@ -70,7 +70,7 @@ fun Application.oAuth() {
 
 @OptIn(KtorExperimentalLocationsAPI::class)
 fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
-    val authOauthForLogin = "authOauthForLogin"
+    val authOauthForLogin = "OAuthForLogin"
     val userRepository = UserRepository()
 
     install(Authentication) {
@@ -96,13 +96,14 @@ fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
                 handle {
                     val principal = call.authentication.principal<OAuthAccessTokenResponse>()
                     if (principal != null) {
+                        principal as OAuthAccessTokenResponse.OAuth2
                         val provider = call.parameters["type"]
                         var providerProfile: GoogleUserProfile? = null
                         when(provider) {
                             loginProvider.github.name -> {
                             }
                             loginProvider.google.name -> {
-                                providerProfile = GoogleClient.getUserProfile(principal as OAuthAccessTokenResponse.OAuth2)
+                                providerProfile = GoogleClient.getUserProfile(principal)
                             }
                             else -> {
                                 println("No provider found")
@@ -113,7 +114,7 @@ fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
                             SessionHandler.setUserSession(call, user)
                         }
                         println(SessionHandler.getUserSession(call))
-                        call.respond("Logged in successfully")
+                        call.respondRedirect(System.getenv("FRONTEND_URL"))
                     } else {
                         call.loginPage()
                     }
@@ -125,7 +126,7 @@ fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
 
 
 @OptIn(KtorExperimentalLocationsAPI::class)
-@Location("/api/login/{type?}")
+@Location("/login/{type?}")
 class login(val type: String = "")
 
 fun <T : Any> ApplicationCall.redirectUrl(t: T, secure: Boolean = true): String {

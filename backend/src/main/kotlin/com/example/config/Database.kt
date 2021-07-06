@@ -6,7 +6,6 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils.create
-import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -21,7 +20,8 @@ object Database {
     }
 
     private fun hikari(): HikariDataSource {
-        val config = HikariConfig("/hikari.properties")
+        val environment = System.getenv("ENV")
+        val config = HikariConfig("/$environment.hikari.properties")
 
         config.maximumPoolSize = 10
         config.isAutoCommit = false

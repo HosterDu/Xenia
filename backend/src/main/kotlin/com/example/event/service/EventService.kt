@@ -14,8 +14,14 @@ class EventService {
         return eventRepository.getAllEventsByUser(user)
     }
 
-    suspend fun createEvent(call: ApplicationCall, event: Event): Event {
+    suspend fun getEvent(call: ApplicationCall, event_id: String): Event? {
         val user = SessionHandler.getUserSession(call)?.user ?: throw UnauthorizedException()
-        return eventRepository.createEvent(event, user)
+        return eventRepository.getEvent(user, event_id)
+    }
+
+
+    suspend fun createEvent(call: ApplicationCall, event: Event) {
+        val user = SessionHandler.getUserSession(call)?.user ?: throw UnauthorizedException()
+        eventRepository.createEvent(event, user)
     }
 }
