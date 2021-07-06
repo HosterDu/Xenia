@@ -5,7 +5,7 @@ import io.ktor.server.netty.*
 import com.example.config.*
 
 fun main() {
-    embeddedServer(Netty, port = 8080) {
+    embeddedServer(Netty, port = System.getenv("PORT").toInt(), "0.0.0.0") {
         settings()
         oAuth()
         Database.init()
