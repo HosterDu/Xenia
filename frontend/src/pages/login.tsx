@@ -7,7 +7,6 @@ import { GoogleLoginButton } from 'react-social-login-buttons';
 
 const Login = () => {
   const user = useUser();
-
   useEffect(() => {
     if (user?.id) {
       router.push('/');
