@@ -1,10 +1,10 @@
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Button, Container, Heading, IconButton } from '@chakra-ui/react';
 import axios from 'axios';
 import Input from 'components/form/Input';
+import router from 'next/dist/client/router';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
-import router from 'next/dist/client/router';
-import { ArrowBackIcon } from '@chakra-ui/icons';
 
 const Event = () => {
   const {
@@ -14,7 +14,7 @@ const Event = () => {
   } = useForm();
 
   function onSubmit(values: any) {
-    axios.post(`events`, values)
+    axios.post(`events`, values);
   }
 
   return (
@@ -25,17 +25,17 @@ const Event = () => {
         <link href='/favicon.ico' rel='icon' />
       </Head>
       <Container maxW='container.lg' mt='25px'>
-      <Heading size='2xl' m='25px 0'>
-        <IconButton variant='outline' isRound colorScheme='teal' aria-label='Add event' onClick={() => router.push("/")} icon={<ArrowBackIcon />} />
-          {" "} Create Event
+        <Heading m='25px 0' size='2xl'>
+          <IconButton aria-label='Add event' colorScheme='teal' icon={<ArrowBackIcon />} isRound onClick={() => router.push('/')} variant='outline' /> Create
+          Event
         </Heading>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Input name="title" placeholder="Coachella Party" title="Event title" register={register} errors={errors} />
-            <Input name="location" placeholder="Slottsplassen 1, 0010 Oslo" title="Event location" register={register} errors={errors} />
-            <Input name="picture" placeholder="https://coolimage.png" title="Event picture" register={register} errors={errors} />
-            <Input name="description" placeholder="This party is gonna be lit..." title="Event description" register={register} errors={errors} multiline/>
-            <Input name="start_date_time" placeholder="2022-03-13T12:00" title="Event datetime" register={register} errors={errors}/>
-          <Button mt={4} colorScheme='teal' isLoading={isSubmitting} type='submit'>
+          <Input errors={errors} name='title' placeholder='Coachella Party' register={register} title='Event title' />
+          <Input errors={errors} name='location' placeholder='Slottsplassen 1, 0010 Oslo' register={register} title='Event location' />
+          <Input errors={errors} name='picture' placeholder='https://coolimage.png' register={register} title='Event picture' />
+          <Input errors={errors} multiline name='description' placeholder='This party is gonna be lit...' register={register} title='Event description' />
+          <Input errors={errors} name='start_date_time' placeholder='2022-03-13T12:00' register={register} title='Event datetime' />
+          <Button colorScheme='teal' isLoading={isSubmitting} mt={4} type='submit'>
             Submit
           </Button>
         </form>

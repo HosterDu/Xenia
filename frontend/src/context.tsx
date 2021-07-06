@@ -1,6 +1,6 @@
+import { ChakraProvider } from '@chakra-ui/react';
 import { SnackbarProvider } from 'contexts/Snackbar';
 import { UserProvider } from 'contexts/User';
-import { ChakraProvider } from "@chakra-ui/react"
 import React, { ReactNode } from 'react';
 import theme from 'theme';
 

@@ -1,43 +1,43 @@
-import Head from 'next/head';
-import { Heading, Grid, Container } from '@chakra-ui/react';
-import { GoogleLoginButton } from 'react-social-login-buttons';
+import { Container, Grid, Heading } from '@chakra-ui/react';
 import { useUser } from 'contexts/User';
-import { useEffect } from 'react';
 import router from 'next/dist/client/router';
+import Head from 'next/head';
+import { useEffect } from 'react';
+import { GoogleLoginButton } from 'react-social-login-buttons';
 
 const Login = () => {
   const user = useUser();
 
-  useEffect(()=>{
-    if(user?.id) {
-        router.push("/")
+  useEffect(() => {
+    if (user?.id) {
+      router.push('/');
     }
-  }, [user])
+  }, [user]);
 
   return (
     <>
       <Head>
         <title>Login</title>
-        <meta name='description' content='Login to Xenia' />
-        <link rel='icon' href='/favicon.ico' />
+        <meta content='Login to Xenia' name='description' />
+        <link href='/favicon.ico' rel='icon' />
       </Head>
       <Container centerContent>
         <Grid
-          gap='20px'
           autoFlow='row dense'
-          maxW='sm'
-          borderWidth='1px'
-          padding='20px'
-          borderRadius='lg'
-          overflow='hidden'
           bg='tomato'
+          borderRadius='lg'
+          borderWidth='1px'
           display='flex'
+          flexDirection='column'
+          gap='20px'
           marginTop='30vh'
-          flexDirection='column'>
+          maxW='sm'
+          overflow='hidden'
+          padding='20px'>
           <Heading size='lg' textAlign='center'>
             Logg inn
           </Heading>
-          <GoogleLoginButton text='med Google' onClick={() => (location.href = `${process.env.API_URL}login/google`)} />
+          <GoogleLoginButton onClick={() => (location.href = `${process.env.API_URL}login/google`)} text='med Google' />
         </Grid>
       </Container>
     </>

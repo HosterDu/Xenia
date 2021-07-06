@@ -1,10 +1,9 @@
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import { AspectRatio, Box, Container, Divider, Heading, IconButton, Image } from '@chakra-ui/react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import Head from 'next/head';
 import router from 'next/dist/client/router';
-
+import Head from 'next/head';
 import { cookieHandler, fetchBuilder } from 'utils/utils';
-import { ArrowBackIcon } from '@chakra-ui/icons';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const eventId = context.params?.event_id;
@@ -15,8 +14,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       props: { event },
     };
-  } catch (err) {
-    throw err;
+  } catch (_) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
   }
 };
 
@@ -29,23 +33,23 @@ const Event = ({ event }: InferGetServerSidePropsType<typeof getServerSideProps>
         <link href='/favicon.ico' rel='icon' />
       </Head>
       <Container maxW='container.lg' mt='25px'>
-      <IconButton variant='outline' isRound colorScheme='teal' aria-label='Add event' onClick={() => router.push("/")} icon={<ArrowBackIcon />} />
-        <Box borderWidth='1px' borderRadius='lg' mt={5} overflow='hidden' >
-          <AspectRatio width={'fill-content'} ratio={32 / 9}>
-            <Image src={event.picture} alt={event.title} />
+        <IconButton aria-label='Add event' colorScheme='teal' icon={<ArrowBackIcon />} isRound onClick={() => router.push('/')} variant='outline' />
+        <Box borderRadius='lg' borderWidth='1px' mt={5} overflow='hidden'>
+          <AspectRatio ratio={32 / 9} width={'fill-content'}>
+            <Image alt={event.title} src={event.picture} />
           </AspectRatio>
           <Box p='6'>
-            <Box mt='1' fontWeight='semibold' as='h4' lineHeight='tight' isTruncated>
+            <Box as='h4' fontWeight='semibold' isTruncated lineHeight='tight' mt='1'>
               <Heading>{event.title}</Heading>
             </Box>
-            <Box d='flex' alignItems='baseline'>
-              <Box color='gray.500' fontWeight='semibold' letterSpacing='wide' fontSize='sm' mt={3} textTransform='uppercase'>
+            <Box alignItems='baseline' d='flex'>
+              <Box color='gray.500' fontSize='sm' fontWeight='semibold' letterSpacing='wide' mt={3} textTransform='uppercase'>
                 {`${event.location} - ${event.start_date_time}`}
               </Box>
             </Box>
             <Divider />
-            <Box d='flex' alignItems='baseline'>
-              <Box fontWeight='semibold' letterSpacing='wide' fontSize='sm' mt={3}>
+            <Box alignItems='baseline' d='flex'>
+              <Box fontSize='sm' fontWeight='semibold' letterSpacing='wide' mt={3}>
                 {event.description}
               </Box>
             </Box>

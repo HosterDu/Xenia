@@ -19,10 +19,10 @@ export const fetchBuilder = (url: string, cookie: string | undefined, method: 'G
 
 export const cookieHandler = (cookies: string | undefined, cookie: string): string | undefined => {
   if (cookies) {
-    try{
+    try {
       return cookies.split('; ').find((c) => c.startsWith(cookie));
     } catch (err) {
-      return undefined
+      return undefined;
     }
   }
   return undefined;

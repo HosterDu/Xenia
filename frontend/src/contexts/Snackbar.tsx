@@ -50,7 +50,6 @@ const SnackbarProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-
 const useSnackbar = () => {
   const context = useContext(SnackbarContext);
   if (context === undefined) {

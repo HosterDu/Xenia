@@ -1,4 +1,3 @@
-
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -22,8 +21,8 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'prettier/@typescript-eslint',
     'plugin:jsx-a11y/recommended',
-    "next", 
-    "next/core-web-vitals",
+    'next',
+    'next/core-web-vitals',
   ],
   globals: {
     importScripts: true,
