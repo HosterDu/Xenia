@@ -18,6 +18,10 @@ application {
     mainClass.set("com.example.ApplicationKt")
 }
 
+tasks.create("stage") {
+    dependsOn("installDist")
+}
+
 repositories {
     mavenCentral()
 }
