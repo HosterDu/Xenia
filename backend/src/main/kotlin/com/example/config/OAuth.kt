@@ -89,16 +89,13 @@ fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
                 param("error") {
                     handle {
                         call.respond("Error when logging in")
-
                     }
                 }
                 handle {
                     val principal = call.authentication.principal<OAuthAccessTokenResponse>()
-                    println("Principle: $principal")
                     if (principal != null) {
                         principal as OAuthAccessTokenResponse.OAuth2
                         val provider = call.parameters["type"]
-                        println("Provider: $provider")
                         var providerProfile: GoogleUserProfile? = null
                         when(provider) {
                             loginProvider.github.name -> {
@@ -110,13 +107,10 @@ fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
                                 println("No provider found")
                             }
                         }
-                        println("providerProfile: $providerProfile")
                         if (providerProfile != null) {
                             val user = userRepository.readOrCreateAuthenticatedUser(providerProfile)
-                            println("User: $user")
                             SessionHandler.setUserSession(call, user)
                         }
-                        println(SessionHandler.getUserSession(call))
                         call.respondRedirect(System.getenv("FRONTEND_URL"))
                     } else {
                         call.loginPage()
