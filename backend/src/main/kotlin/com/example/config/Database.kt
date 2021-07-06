@@ -20,7 +20,7 @@ object Database {
     }
 
     private fun hikari(): HikariDataSource {
-        val environment = System.getenv("ENV")
+        val environment = System.getenv("ENV") ?: "dev"
         val config = HikariConfig("/$environment.hikari.properties")
 
         config.maximumPoolSize = 10

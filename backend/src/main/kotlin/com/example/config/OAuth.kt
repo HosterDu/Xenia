@@ -42,8 +42,8 @@ val loginProviders = listOf(
         accessTokenUrl = "https://www.googleapis.com/oauth2/v3/token",
         requestMethod = HttpMethod.Post,
 
-        clientId = "816095121514-8jit6tmhhrpe0va6ivjvp8qvek425i49.apps.googleusercontent.com",
-        clientSecret = "thI920-0swv4U0aLdB07ICNs",
+        clientId = "290584673388-9a3h9qot43j46g0u835mdcb6bh9gvtq6.apps.googleusercontent.com",
+        clientSecret = "-c8vhzEZBR4cYp_ED16sXLpO",
         passParamsInURL = true,
         defaultScopes = listOf(
             "https://www.googleapis.com/auth/plus.login",
