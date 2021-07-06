@@ -22,6 +22,11 @@ tasks.create("stage") {
     dependsOn("installDist")
 }
 
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "com.example.Application"
+    }
+}
 repositories {
     mavenCentral()
 }
