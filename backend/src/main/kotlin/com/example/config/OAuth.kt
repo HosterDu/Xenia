@@ -44,7 +44,6 @@ val loginProviders = listOf(
 
         clientId = "290584673388-9a3h9qot43j46g0u835mdcb6bh9gvtq6.apps.googleusercontent.com",
         clientSecret = "-c8vhzEZBR4cYp_ED16sXLpO",
-        passParamsInURL = true,
         defaultScopes = listOf(
             "https://www.googleapis.com/auth/plus.login",
             "https://www.googleapis.com/auth/userinfo.email",
@@ -95,9 +94,11 @@ fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
                 }
                 handle {
                     val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+                    println("Principle: $principal")
                     if (principal != null) {
                         principal as OAuthAccessTokenResponse.OAuth2
                         val provider = call.parameters["type"]
+                        println("Provider: $provider")
                         var providerProfile: GoogleUserProfile? = null
                         when(provider) {
                             loginProvider.github.name -> {
@@ -109,8 +110,10 @@ fun Application.oAuthWithDeps(oauthHttpClient: HttpClient) {
                                 println("No provider found")
                             }
                         }
+                        println("providerProfile: $providerProfile")
                         if (providerProfile != null) {
                             val user = userRepository.readOrCreateAuthenticatedUser(providerProfile)
+                            println("User: $user")
                             SessionHandler.setUserSession(call, user)
                         }
                         println(SessionHandler.getUserSession(call))
