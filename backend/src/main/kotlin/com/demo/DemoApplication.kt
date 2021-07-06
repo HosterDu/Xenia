@@ -1,4 +1,4 @@
-package com.Xenia.demo
+package com.demo
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
