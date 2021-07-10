@@ -4,7 +4,7 @@ plugins {
 	id("org.springframework.boot") version "2.5.2"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	id("com.github.johnrengelman.processes") version "0.5.0"
-	id("org.springdoc.openapi-gradle-plugin") version "1.3.0"
+	id("org.springdoc.openapi-gradle-plugin") version "1.3.2"
 	kotlin("jvm") version "1.5.20"
 	kotlin("plugin.spring") version "1.5.20"
 	kotlin("plugin.jpa") version "1.5.20"
@@ -31,6 +31,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.postgresql:postgresql")
+	implementation("org.springdoc:springdoc-openapi-core:1.1.49")
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.5.0")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
