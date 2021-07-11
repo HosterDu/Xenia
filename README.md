@@ -2,14 +2,7 @@
 
 ## Setup
 ### Backend
-enviorment varialbles:
-```
-ENV=dev;
-FRONTEND_URL=http://localhost:3000;
-PORT=8080;
-```
-
-Use Intellij for easy life happy wife.
+In intellij set active profile to `local`
 
 ### Frontend
 ```

@@ -11,8 +11,8 @@ plugins {
 }
 
 group = "com.Xenia"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+version = "0.0.1"
+java.sourceCompatibility = JavaVersion.VERSION_16
 
 repositories {
 	mavenCentral()
@@ -32,6 +32,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.postgresql:postgresql")
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
@@ -45,11 +46,12 @@ dependencyManagement {
 }
 
 tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
-	}
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "16"
+    }
 }
+
 
 tasks.withType<Test> {
 	useJUnitPlatform()

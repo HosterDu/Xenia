@@ -1,4 +1,4 @@
-package com.hosterdu.xenia.model.event
+package com.hosterdu.xenia.event.model
 
 import javax.persistence.Id
 import javax.persistence.Entity
