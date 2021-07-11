@@ -1,62 +1,56 @@
-val ktor_version: String by project
-val kotlin_version: String by project
-val exposed_version: String by project
-val hikari_version: String by project
-val postgres_version: String by project
-val logback_version: String by project
-val nanoid_version: String by project
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    application
-    kotlin("jvm") version "1.5.20"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.5.20"
+	id("org.springframework.boot") version "2.5.2"
+	id("io.spring.dependency-management") version "1.0.11.RELEASE"
+	id("com.github.johnrengelman.processes") version "0.5.0"
+	id("org.springdoc.openapi-gradle-plugin") version "1.3.2"
+	kotlin("jvm") version "1.5.20"
+	kotlin("plugin.spring") version "1.5.20"
+	kotlin("plugin.jpa") version "1.5.20"
 }
 
-group = "com.example"
-version = "0.1.0"
-application {
-    mainClass.set("com.example.ApplicationKt")
-}
+group = "com.Xenia"
+version = "0.0.1-SNAPSHOT"
+java.sourceCompatibility = JavaVersion.VERSION_11
 
-tasks.create("stage") {
-    dependsOn("installDist")
-}
-
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = "com.example.Application"
-    }
-}
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
+
+extra["testcontainersVersion"] = "1.15.3"
 
 dependencies {
-    implementation("io.ktor:ktor-server-core:$ktor_version")
-    implementation("io.ktor:ktor-server-sessions:$ktor_version")
-    implementation("io.ktor:ktor-server-netty:$ktor_version")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-data-rest")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("org.postgresql:postgresql")
+	implementation("io.springfox:springfox-boot-starter:3.0.0")
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.security:spring-security-test")
+	testImplementation("org.testcontainers:junit-jupiter")
+}
 
-    implementation("io.ktor:ktor-client-core:$ktor_version")
-    implementation("io.ktor:ktor-client-core-jvm:$ktor_version")
-    implementation("io.ktor:ktor-client-apache:$ktor_version")
-    implementation("io.ktor:ktor-client-serialization:$ktor_version")
+dependencyManagement {
+	imports {
+		mavenBom("org.testcontainers:testcontainers-bom:${property("testcontainersVersion")}")
+	}
+}
 
-    implementation("io.ktor:ktor-auth:$ktor_version")
-    implementation("io.ktor:ktor-locations:$ktor_version")
-    implementation("io.ktor:ktor-serialization:$ktor_version")
-    implementation("io.ktor:ktor-html-builder:$ktor_version")
+tasks.withType<KotlinCompile> {
+	kotlinOptions {
+		freeCompilerArgs = listOf("-Xjsr305=strict")
+		jvmTarget = "11"
+	}
+}
 
-    implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
-    implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
-    implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
-    implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
-
-    implementation("com.zaxxer:HikariCP:$hikari_version")
-    implementation("org.postgresql:postgresql:$postgres_version")
-
-    implementation("com.aventrix.jnanoid:jnanoid:$nanoid_version")
-
-    implementation("ch.qos.logback:logback-classic:$logback_version")
-
-    testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+tasks.withType<Test> {
+	useJUnitPlatform()
 }
