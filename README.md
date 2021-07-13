@@ -27,4 +27,11 @@ En ide fra selveste Mads er jo å integrere Doodle i systemet slik at arrangør 
 
 ## Setup
 ### Backend
-In intellij set active profile to `local`
+In intelliJ set active profile to `local`
+or run command:
+```
+SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
+```
+
+#### Login
+Login in backend happens at `/login`
