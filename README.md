@@ -5,6 +5,7 @@ Systemet vil ha mulighet til å opprette et arrangement man kan dele på sosiale
 
 I videre iterasjoner kan systemet integrere billettsalg som en betalt funksjon slik at man må kjøpe en bilett for å delta på arrangementet. 
 
+
 En ide fra selveste Mads er jo å integrere Doodle i systemet slik at arrangør kan bruke et lignende system for å finne ut av når det passer for alle. 
 
 # Teknologi:
@@ -23,3 +24,14 @@ En ide fra selveste Mads er jo å integrere Doodle i systemet slik at arrangør 
 ## Eventuell 
 ### Mobil:
 - Flutter
+
+## Setup
+### Backend
+In intelliJ set active profile to `local`
+or run command:
+```
+SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
+```
+
+#### Login
+Login in backend happens at `/login`
