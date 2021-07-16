@@ -9,7 +9,7 @@ data class Event(
     @GeneratedValue
     @Id
     val id: Long,
-    @Lob
+    @Column(columnDefinition = "text")
     val title: String,
     val description: String,
     val image: String,
