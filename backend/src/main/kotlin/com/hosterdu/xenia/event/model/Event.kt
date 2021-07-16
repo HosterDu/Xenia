@@ -9,6 +9,7 @@ data class Event(
     @GeneratedValue
     @Id
     val id: Long,
+    @Lob
     val title: String,
     val description: String,
     val image: String,
