@@ -1,7 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import router from 'next/dist/client/router';
 import { createContext, useContext, useEffect } from 'react';
-import { ReactChild, ReactChildren, ReactNode } from 'react-calendar/node_modules/@types/react';
 import { IUser } from 'utils/types';
 
 const UserContext = createContext(undefined);
@@ -22,6 +21,7 @@ const LOGGED_IN_PROFILE = gql`
   }
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function UserProvider(props: any) {
   const { data: user, loading } = useQuery(LOGGED_IN_PROFILE);
 

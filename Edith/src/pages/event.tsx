@@ -1,32 +1,48 @@
 import { gql, useMutation } from '@apollo/client';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { Button, Container, Heading, IconButton } from '@chakra-ui/react';
+import { Button, Container, Heading, IconButton, useToast } from '@chakra-ui/react';
 import Input from 'components/form/Input';
 import router from 'next/dist/client/router';
 import Head from 'next/head';
+import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 const CREATE_EVENT = gql`
   mutation CreateEventQuery($event: CreateEventDtoInput!) {
     createEvent(event: $event) {
-      creator {
-        id
-      }
+      id
     }
   }
 `;
 
 const Event = () => {
+  const toast = useToast({ duration: 3000, position: 'bottom-left' });
+  const toastIdRef = useRef();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm();
-  const [createEvent] = useMutation(CREATE_EVENT);
+  const [createEvent] = useMutation(CREATE_EVENT, {
+    onCompleted: (data) => {
+      console.log(data);
+      toast({
+        title: 'Event created',
+        status: 'success',
+      });
+      router.push(`/event/${data.createEvent.id}`);
+    },
+    onError: (err) => {
+      toast({
+        title: err.message,
+        status: 'error',
+      });
+    },
+  });
 
-  function onSubmit(values: unknown) {
+  const onSubmit = (values: any) => {
     createEvent({ variables: { event: values } });
-  }
+  };
 
   return (
     <div>

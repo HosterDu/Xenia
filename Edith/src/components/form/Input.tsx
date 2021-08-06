@@ -1,12 +1,11 @@
 import { FormControl, FormErrorMessage, FormLabel, Input as CInput, Textarea } from '@chakra-ui/react';
-import { FieldErrors } from 'react-hook-form';
-import { RegisterOptions } from 'react-hook-form';
+import { FieldErrors, FieldValues, RegisterOptions, UseFormRegister } from 'react-hook-form';
 
 type InputType = {
   name: string;
   placeholder: string;
   title: string;
-  register: any;
+  register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
   rules?: RegisterOptions;
   multiline?: boolean;
