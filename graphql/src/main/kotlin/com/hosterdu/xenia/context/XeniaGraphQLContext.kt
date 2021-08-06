@@ -5,6 +5,7 @@ import com.expediagroup.graphql.server.spring.execution.SpringGraphQLContextFact
 import com.hosterdu.xenia.profile.model.Profile
 import com.hosterdu.xenia.profile.service.ProfileService
 import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.ReactiveSecurityContextHolder
 import org.springframework.security.core.context.SecurityContext
@@ -20,10 +21,14 @@ class XeniaGraphQLContext(val profile: Profile?, request: ServerRequest) : Sprin
 @Component
 class XeniaGraphQLContextFactory (val profileService: ProfileService): SpringGraphQLContextFactory<XeniaGraphQLContext>() {
     override suspend fun generateContext(request: ServerRequest): XeniaGraphQLContext {
-        println(ZonedDateTime.now())
-        val id =  ReactiveSecurityContextHolder.getContext() .map(SecurityContext::getAuthentication)
-            .map(Authentication::getName).awaitSingle() ?: return XeniaGraphQLContext(null, request)
-        val profile = profileService.findProfileById(id)
-        return XeniaGraphQLContext(profile, request)
+        try {
+            val id = ReactiveSecurityContextHolder.getContext().map(SecurityContext::getAuthentication)
+                .map(Authentication::getName).awaitSingleOrNull() ?: return XeniaGraphQLContext(null, request)
+            val profile = profileService.findProfileById(id)
+            return XeniaGraphQLContext(profile, request)
+        } catch (err: Exception) {
+            println(err)
+            throw err
+        }
     }
 }

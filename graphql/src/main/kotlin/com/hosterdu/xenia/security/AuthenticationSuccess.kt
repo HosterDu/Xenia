@@ -21,8 +21,10 @@ class Oauth2AuthenticationSuccessHandler(
         webFilterExchange: WebFilterExchange,
         authentication: Authentication
     ): Mono<Void> {
+
         val authenticationToken = authentication as OAuth2AuthenticationToken
         val attributes = authenticationToken.principal.attributes
+
         val profile = Profile(
             authentication.principal.name,
             attributes["email"].toString(),
@@ -32,9 +34,10 @@ class Oauth2AuthenticationSuccessHandler(
             attributes["locale"].toString(),
         )
         profileService.findOrCreateProfile(profile)
+
         val response = webFilterExchange.exchange.response
-        response.setStatusCode(HttpStatus.PERMANENT_REDIRECT);
-        response.getHeaders().setLocation(URI.create("/loginSuccess"));
+        response.statusCode = HttpStatus.PERMANENT_REDIRECT;
+        response.headers.location = URI.create("http://localhost:3000");
         return response.setComplete();
     }
 }

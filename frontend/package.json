@@ -17,12 +17,14 @@
     "format": "prettier --write --check --config ./.prettierrc './**/*.{js,jsx,ts,tsx,css,md,json}'"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.5",
     "@chakra-ui/icons": "^1.0.13",
     "@chakra-ui/react": "^1.6.4",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "axios": "^0.21.1",
     "framer-motion": "^4",
+    "graphql": "^15.5.1",
     "moment": "^2.29.1",
     "next": "^10.0.0",
     "next-cookies": "^2.0.3",

@@ -9,7 +9,7 @@ export type IUser = {
   family_name: string;
   email: string;
   picture: string;
-  type: UserRole;
+  type?: UserRole;
 };
 
 export type IEvent = {

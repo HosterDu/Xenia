@@ -7,6 +7,7 @@ import { GoogleLoginButton } from 'react-social-login-buttons';
 
 const Login = () => {
   const user = useUser();
+
   useEffect(() => {
     if (user?.id) {
       router.push('/');
@@ -36,7 +37,7 @@ const Login = () => {
           <Heading size='lg' textAlign='center'>
             Logg inn
           </Heading>
-          <GoogleLoginButton onClick={() => (location.href = `${process.env.API_URL}login/google`)} text='med Google' />
+          <GoogleLoginButton onClick={() => (location.href = `${process.env.API_URL}oauth2/authorization/google`)} text='med Google' />
         </Grid>
       </Container>
     </>
