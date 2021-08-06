@@ -1,20 +1,46 @@
+import { gql } from '@apollo/client';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { AspectRatio, Box, Container, Divider, Heading, IconButton, Image } from '@chakra-ui/react';
+import { client } from 'contexts/Apollo';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import router from 'next/dist/client/router';
 import Head from 'next/head';
-import { cookieHandler, fetchBuilder } from 'utils/utils';
+
+const EVENT_BY_ID = gql`
+  query GetEventById($id: String!) {
+    event(id: $id) {
+      id
+      title
+      description
+      location {
+        id
+        lat
+        lng
+      }
+      startDate
+      picture
+      creator {
+        id
+        given_name
+        family_name
+      }
+    }
+  }
+`;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const eventId = context.params?.event_id;
-  const cookies = context.req.headers.cookie;
+
   try {
-    const res = await fetchBuilder(`events/${eventId}`, cookieHandler(cookies, 'user_session'));
-    const event = await res.data;
+    const { data } = await client.query({
+      query: EVENT_BY_ID,
+      variables: { id: eventId },
+    });
+    const event = await data?.event;
     return {
       props: { event },
     };
-  } catch (_) {
+  } catch (error) {
     return {
       redirect: {
         destination: '/login',
@@ -23,7 +49,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 };
-
 const Event = ({ event }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <div>

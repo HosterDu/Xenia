@@ -1,10 +1,20 @@
+import { gql, useMutation } from '@apollo/client';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Button, Container, Heading, IconButton } from '@chakra-ui/react';
-import axios from 'axios';
 import Input from 'components/form/Input';
 import router from 'next/dist/client/router';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
+
+const CREATE_EVENT = gql`
+  mutation CreateEventQuery($event: CreateEventDtoInput!) {
+    createEvent(event: $event) {
+      creator {
+        id
+      }
+    }
+  }
+`;
 
 const Event = () => {
   const {
@@ -12,9 +22,10 @@ const Event = () => {
     register,
     formState: { errors, isSubmitting },
   } = useForm();
+  const [createEvent] = useMutation(CREATE_EVENT);
 
-  function onSubmit(values: any) {
-    axios.post(`events`, values);
+  function onSubmit(values: unknown) {
+    createEvent({ variables: { event: values } });
   }
 
   return (
@@ -31,10 +42,12 @@ const Event = () => {
         </Heading>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input errors={errors} name='title' placeholder='Coachella Party' register={register} title='Event title' />
-          <Input errors={errors} name='location' placeholder='Slottsplassen 1, 0010 Oslo' register={register} title='Event location' />
+          <Input errors={errors} name='lat' placeholder='1' register={register} title='Event location lat' />
+          <Input errors={errors} name='lng' placeholder='1' register={register} title='Event location lng' />
           <Input errors={errors} name='picture' placeholder='https://coolimage.png' register={register} title='Event picture' />
           <Input errors={errors} multiline name='description' placeholder='This party is gonna be lit...' register={register} title='Event description' />
-          <Input errors={errors} name='start_date_time' placeholder='2022-03-13T12:00' register={register} title='Event datetime' />
+          <Input errors={errors} name='startDate' placeholder='2022-03-13T12:00:00' register={register} title='Event datetime start' />
+          <Input errors={errors} name='endDate' placeholder='2022-03-13T12:00' register={register} title='Event datetime end' />
           <Button colorScheme='teal' isLoading={isSubmitting} mt={4} type='submit'>
             Submit
           </Button>

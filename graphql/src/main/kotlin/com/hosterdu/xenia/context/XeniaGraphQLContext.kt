@@ -27,7 +27,7 @@ class XeniaGraphQLContextFactory (val profileService: ProfileService): SpringGra
             val profile = profileService.findProfileById(id)
             return XeniaGraphQLContext(profile, request)
         } catch (err: Exception) {
-            println(err)
+            println("error: $err")
             throw err
         }
     }

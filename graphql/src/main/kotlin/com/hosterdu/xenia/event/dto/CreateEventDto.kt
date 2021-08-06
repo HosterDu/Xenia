@@ -9,7 +9,7 @@ data class CreateEventDto (
     val title: String,
     @Column(columnDefinition = "text")
     val description: String,    
-    val image: String,
+    val picture: String,
     val startDate: ZonedDateTime,
     val endDate: ZonedDateTime,
     val lat: Long,
@@ -20,7 +20,7 @@ fun CreateEventDto.toEvent() = Event(
     id = "",
     title = this.title,
     description = this.description,
-    image = this.image,
+    picture = this.picture,
     startDate = this.startDate,
     endDate = this.endDate,
     location = Geolocation("",lat = this.lat, lng = this.lng)

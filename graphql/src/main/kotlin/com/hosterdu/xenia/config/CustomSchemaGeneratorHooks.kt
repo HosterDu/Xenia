@@ -38,7 +38,7 @@ object ZonedDateTimeCoercing : Coercing<ZonedDateTime, String> {
 val graphqlLongTimeType = GraphQLScalarType.newScalar()
     .name("Long")
     .description("A type representing a Kotlin Long")
-    .coercing(ZonedDateTimeCoercing)
+    .coercing(LongCoercing)
     .build()
 
 object LongCoercing : Coercing<Long, String> {

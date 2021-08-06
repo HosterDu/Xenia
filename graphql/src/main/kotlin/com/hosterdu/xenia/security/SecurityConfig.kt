@@ -16,11 +16,11 @@ class SecurityConfig(val profileService: ProfileService){
         return http
                 .cors().configurationSource {
                     val cors = CorsConfiguration()
-                    cors.addAllowedOrigin("http://localhost:3000")
                     cors.addAllowedHeader("*")
                     cors.addAllowedMethod("*")
+                    cors.allowedOriginPatterns = listOf("*")
                     cors.allowCredentials = true
-                    println(cors.allowedOriginPatterns)
+                    cors.allowedHeaders = listOf("Authorization", "Cache-Control", "Content-Type", "Cookie")
                     return@configurationSource cors
                 }
                 .and()

@@ -14,11 +14,10 @@ import org.springframework.stereotype.Service
 class EventService(val eventRepository: EventRepository, val geolocationRepository: GeolocationRepository) {
 
     fun createEvent(event : CreateEventDto, profile: Profile?) : Event{
+
         val newEvent = event.toEvent()
         newEvent.creator = profile
-        println(event.startDate)
 
-        println(newEvent.startDate)
         if(newEvent.location != null){
             val geolocation = newEvent.location
            newEvent.location = geolocationRepository.saveAndFlush(geolocation!!)
@@ -33,13 +32,12 @@ class EventService(val eventRepository: EventRepository, val geolocationReposito
             var updatedEvent = this.copy(
                 title = event.title,
                 description = event.description,
-                image = event.image
+                picture = event.picture
             )
             updatedEvent = eventRepository.saveAndFlush(updatedEvent)
             return updatedEvent
         }
     }
-
 
     fun findById(id: String): Event{
         return eventRepository.findById(id).orElseThrow()

@@ -16,7 +16,7 @@ data class Event(
     val title: String,
     @Column(columnDefinition = "text")
     val description: String,
-    val image: String,
+    val picture: String,
     val startDate: ZonedDateTime,
     val endDate: ZonedDateTime,
     @OneToOne

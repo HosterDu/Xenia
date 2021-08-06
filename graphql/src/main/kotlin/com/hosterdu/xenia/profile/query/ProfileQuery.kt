@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ProfileQuery (val profileService: ProfileService): Query {
-    fun  profile(context: XeniaGraphQLContext) = profileService.findProfileById(context.profile!!.id)
+    fun  profile(context: XeniaGraphQLContext) = context.profile?.let { profileService.findProfileById(it.id) }
 
 }
 

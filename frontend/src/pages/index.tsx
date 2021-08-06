@@ -1,9 +1,8 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { AddIcon } from '@chakra-ui/icons';
 import { Container, Grid, Heading, IconButton } from '@chakra-ui/react';
 import Card from 'components/index/Card';
 import { client } from 'contexts/Apollo';
-import { useUser } from 'contexts/User';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import router from 'next/dist/client/router';
 import Head from 'next/head';
@@ -20,7 +19,7 @@ const USER_EVENT = gql`
         lng
       }
       startDate
-      image
+      picture
       creator {
         id
         given_name
@@ -50,7 +49,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 const Dashboard = ({ events }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  console.log(events);
   return (
     <>
       <Head>
