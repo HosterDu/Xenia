@@ -1,5 +1,5 @@
 {
-  "name": "xenia",
+  "name": "edith",
   "version": "0.1.0",
   "private": true,
   "contributors": [
@@ -26,16 +26,12 @@
     "graphql": "^15.5.1",
     "moment": "^2.29.1",
     "next": "^10.0.0",
-    "next-cookies": "^2.0.3",
     "react": "17.0.1",
     "react-datetime-picker": "^3.3.0",
     "react-dom": "17.0.1",
     "react-hook-form": "^7.10.1",
     "react-social-login-buttons": "^3.4.0",
-    "safe-json-stringify": "^1.2.0",
-    "styled-components": "^5.3.0",
-    "swr": "^0.5.6",
-    "universal-cookie": "^4.0.4"
+    "styled-components": "^5.3.0"
   },
   "devDependencies": {
     "@types/react": "17.0.11",
