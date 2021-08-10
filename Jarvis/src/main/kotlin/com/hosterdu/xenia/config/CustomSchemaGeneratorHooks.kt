@@ -13,7 +13,6 @@ class CustomSchemaGeneratorHooks : SchemaGeneratorHooks {
 
     override fun willGenerateGraphQLType(type: KType): GraphQLType? = when (type.classifier as? KClass<*>) {
         ZonedDateTime::class -> graphqlZonedDateTimeType
-        Long::class -> graphqlLongTimeType
         else -> null
     }
 }
@@ -30,23 +29,6 @@ object ZonedDateTimeCoercing : Coercing<ZonedDateTime, String> {
     override fun parseLiteral(input: Any?): ZonedDateTime? {
         val timeString = (input as? StringValue)?.value
         return ZonedDateTime.parse(timeString)
-    }
-
-    override fun serialize(dataFetcherResult: Any?): String = dataFetcherResult.toString()
-}
-
-val graphqlLongTimeType = GraphQLScalarType.newScalar()
-    .name("Long")
-    .description("A type representing a Kotlin Long")
-    .coercing(LongCoercing)
-    .build()
-
-object LongCoercing : Coercing<Long, String> {
-    override fun parseValue(input: Any?): Long = (serialize(input)).toLong()
-
-    override fun parseLiteral(input: Any?): Long? {
-        val timeString = (input as? StringValue)?.value
-        return timeString?.toLong()
     }
 
     override fun serialize(dataFetcherResult: Any?): String = dataFetcherResult.toString()

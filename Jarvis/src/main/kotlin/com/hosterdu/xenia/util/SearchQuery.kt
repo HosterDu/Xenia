@@ -8,11 +8,10 @@ import org.springframework.stereotype.Component
 @Component
 class SearchQuery(val profileService: ProfileService, val eventService: EventService): Query {
 
-    fun search(query: String): List<Node>{
+    fun search(query: String): List<Node> {
         val profiles = profileService.getAllProfiles()
-        val events = eventService.gettAllEvents()
-        val response = profiles + events
-        return response
+        val events = eventService.getAllEvents()
+        return profiles + events
 
     }
 }
