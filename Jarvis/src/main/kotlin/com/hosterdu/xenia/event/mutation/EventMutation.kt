@@ -19,6 +19,7 @@ class EventMutation(val eventService: EventService) : Mutation {
     } */
 
     fun createEvent(event: CreateEventDto, context: XeniaGraphQLContext) = eventService.createEvent(event, context.profile)
-    fun updateEvent(id: String, event: CreateEventDto, context: XeniaGraphQLContext) = eventService.updateEvent(id,    event, context.profile)
+    fun updateEvent(id: String, event: CreateEventDto, context: XeniaGraphQLContext) = eventService.updateEvent(id, event, context.profile)
+    fun deleteEvent(id: String, context: XeniaGraphQLContext) = eventService.deleteEvent(id, context.profile)
 
 }

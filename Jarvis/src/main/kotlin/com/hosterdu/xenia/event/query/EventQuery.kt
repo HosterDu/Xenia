@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class EventQuery (val eventService: EventService): Query {
-    fun  event(id :String) = eventService.findById(id)
-    fun events() = eventService.gettAllEvents()
-
+    fun event(id :String) = eventService.findById(id)
+    fun events() = eventService.getAllEvents()
 
 }

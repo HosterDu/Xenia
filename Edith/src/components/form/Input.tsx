@@ -13,14 +13,14 @@ type InputType = {
 
 const Input = ({ name, title, placeholder, register, errors, rules = undefined, multiline = false }: InputType) => {
   return (
-    <FormControl isInvalid={errors.name}>
+    <FormControl isInvalid={errors[name]}>
       <FormLabel htmlFor={name}>{title}</FormLabel>
       {multiline ? (
         <Textarea id={name} placeholder={placeholder} {...register(name, rules)} />
       ) : (
         <CInput id={name} placeholder={placeholder} {...register(name, rules)} />
       )}
-      <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+      <FormErrorMessage>{errors[name] && errors[name].message}</FormErrorMessage>
     </FormControl>
   );
 };

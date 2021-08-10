@@ -12,8 +12,10 @@ data class CreateEventDto (
     val picture: String,
     val startDate: ZonedDateTime,
     val endDate: ZonedDateTime,
-    val lat: Long,
-    val lng: Long,
+    val lat: Float,
+    val lng: Float,
+    val address: String,
+    val locationId: String
     )
 
 fun CreateEventDto.toEvent() = Event(
@@ -23,5 +25,5 @@ fun CreateEventDto.toEvent() = Event(
     picture = this.picture,
     startDate = this.startDate,
     endDate = this.endDate,
-    location = Geolocation("",lat = this.lat, lng = this.lng)
+    location = Geolocation(id = this.locationId,lat = this.lat, lng = this.lng, address = this.address)
 )

@@ -26,7 +26,7 @@ function UserProvider(props: any) {
   const { data: user, loading } = useQuery(LOGGED_IN_PROFILE);
 
   useEffect(() => {
-    if (!user?.profile && !loading) {
+    if (!user?.profile?.id && !loading) {
       router.push('/login');
     }
   }, [user?.profile, loading]);

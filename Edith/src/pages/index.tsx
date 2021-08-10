@@ -15,16 +15,10 @@ const USER_EVENT = gql`
       title
       location {
         id
-        lat
-        lng
+        address
       }
       startDate
       picture
-      creator {
-        id
-        given_name
-        family_name
-      }
     }
   }
 `;
