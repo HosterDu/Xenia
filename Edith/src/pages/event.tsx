@@ -1,10 +1,11 @@
 import { gql, useMutation } from '@apollo/client';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { Button, Container, Heading, IconButton, useToast } from '@chakra-ui/react';
-import Input from 'components/form/Input';
+import { Container, Heading, IconButton, useToast } from '@chakra-ui/react';
+import EventForm from 'components/event/EventForm';
+import moment from 'moment';
 import router from 'next/dist/client/router';
 import Head from 'next/head';
-import { useRef } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
 const CREATE_EVENT = gql`
@@ -17,15 +18,16 @@ const CREATE_EVENT = gql`
 
 const Event = () => {
   const toast = useToast({ duration: 3000, position: 'bottom-left' });
-  const toastIdRef = useRef();
   const {
     handleSubmit,
     register,
+    setValue,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm();
+
   const [createEvent] = useMutation(CREATE_EVENT, {
     onCompleted: (data) => {
-      console.log(data);
       toast({
         title: 'Event created',
         status: 'success',
@@ -41,6 +43,8 @@ const Event = () => {
   });
 
   const onSubmit = (values: any) => {
+    values.startDate = moment(values.startDate).format();
+    values.endDate = moment(values.endDate).format();
     createEvent({ variables: { event: values } });
   };
 
@@ -57,16 +61,7 @@ const Event = () => {
           Event
         </Heading>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Input errors={errors} name='title' placeholder='Coachella Party' register={register} title='Event title' />
-          <Input errors={errors} name='lat' placeholder='1' register={register} title='Event location lat' />
-          <Input errors={errors} name='lng' placeholder='1' register={register} title='Event location lng' />
-          <Input errors={errors} name='picture' placeholder='https://coolimage.png' register={register} title='Event picture' />
-          <Input errors={errors} multiline name='description' placeholder='This party is gonna be lit...' register={register} title='Event description' />
-          <Input errors={errors} name='startDate' placeholder='2022-03-13T12:00:00+01:00' register={register} title='Event datetime start' />
-          <Input errors={errors} name='endDate' placeholder='2022-03-14T12:00:00+01:00' register={register} title='Event datetime end' />
-          <Button colorScheme='teal' isLoading={isSubmitting} mt={4} type='submit'>
-            Submit
-          </Button>
+          <EventForm errors={errors} getValues={getValues} isSubmitting={isSubmitting} register={register} setValue={setValue} />
         </form>
       </Container>
     </div>

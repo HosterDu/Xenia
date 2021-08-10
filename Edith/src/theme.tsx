@@ -3,10 +3,19 @@ import { extendTheme } from '@chakra-ui/react';
 const theme = extendTheme({
   config: {
     initialColorMode: 'dark',
-    useSystemColorMode: true,
+    useSystemColorMode: false,
   },
-  colors: {
-    brand: {},
+  components: {
+    Input: {
+      baseStyle: {
+        field: {
+          '::-webkit-calendar-picker-indicator': {
+            filter: 'invert(1)',
+          },
+        },
+      },
+    },
   },
 });
+
 export default theme;
