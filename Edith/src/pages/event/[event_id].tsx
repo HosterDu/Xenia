@@ -14,6 +14,8 @@ const EVENT_BY_ID = gql`
       description
       location {
         id
+        contextualName
+        type
         lat
         lng
       }
@@ -69,7 +71,7 @@ const Event = ({ event }: InferGetServerSidePropsType<typeof getServerSideProps>
             </Box>
             <Box alignItems='baseline' d='flex'>
               <Box color='gray.500' fontSize='sm' fontWeight='semibold' letterSpacing='wide' mt={3} textTransform='uppercase'>
-                {`${event.location} - ${event.start_date_time}`}
+                {`${event.location.contextualName} - ${event.start_date_time}`}
               </Box>
             </Box>
             <Divider />

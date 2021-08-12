@@ -1,7 +1,6 @@
 package com.hosterdu.xenia.event.dto
 
 import com.hosterdu.xenia.event.model.Event
-import com.hosterdu.xenia.event.model.Geolocation
 import java.time.ZonedDateTime
 import javax.persistence.*
 
@@ -12,8 +11,7 @@ data class CreateEventDto (
     val picture: String,
     val startDate: ZonedDateTime,
     val endDate: ZonedDateTime,
-    val lat: Long,
-    val lng: Long,
+    val location: GeoLocationDto
     )
 
 fun CreateEventDto.toEvent() = Event(
@@ -23,5 +21,5 @@ fun CreateEventDto.toEvent() = Event(
     picture = this.picture,
     startDate = this.startDate,
     endDate = this.endDate,
-    location = Geolocation("",lat = this.lat, lng = this.lng)
+    location = this.location.toGeoLocation()
 )
