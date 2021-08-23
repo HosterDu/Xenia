@@ -8,6 +8,8 @@ plugins {
 	kotlin("jvm") version "1.5.20"
 	kotlin("plugin.spring") version "1.5.20"
 	kotlin("plugin.jpa") version "1.5.20"
+	id("com.google.cloud.tools.jib") version "3.0.0"
+
 
 
 
@@ -35,7 +37,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("com.expediagroup:graphql-kotlin-hooks-provider:5.0.0-alpha.0")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("com.expediagroup:graphql-kotlin-spring-server:5.0.0-alpha.0")
 
 	implementation("com.graphql-java:graphql-java-extended-scalars:1.0.1")
@@ -47,6 +48,10 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("org.testcontainers:junit-jupiter")
+	testImplementation("io.projectreactor:reactor-test")
+	implementation("io.github.serpro69:kotlin-faker:1.7.1")
+	testImplementation("org.awaitility:awaitility:3.1.2")
+
 
 
 }

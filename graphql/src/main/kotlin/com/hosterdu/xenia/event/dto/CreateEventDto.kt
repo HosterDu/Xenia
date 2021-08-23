@@ -25,3 +25,14 @@ fun CreateEventDto.toEvent() = Event(
     endDate = this.endDate,
     location = Geolocation("",lat = this.lat, lng = this.lng)
 )
+
+fun Event.toCreateEventDto() = CreateEventDto(
+    title = this.title,
+    description = this.description,
+    image = this.image,
+    startDate = this.startDate,
+    endDate = this.endDate,
+    lng = this.location?.lng ?: -1,
+    lat = this.location?.lat ?: -1
+
+)

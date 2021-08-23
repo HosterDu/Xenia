@@ -1,10 +1,10 @@
 package com.hosterdu.xenia.profile.model
 
 import com.hosterdu.xenia.util.Node
+import java.security.Principal
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
-
 
 @Entity
 data class Profile(

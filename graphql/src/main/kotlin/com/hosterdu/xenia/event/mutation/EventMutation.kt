@@ -1,5 +1,6 @@
 package com.hosterdu.xenia.event.mutation
 
+import com.expediagroup.graphql.generator.annotations.GraphQLIgnore
 import com.expediagroup.graphql.generator.execution.OptionalInput
 import com.expediagroup.graphql.server.operations.Mutation
 import com.hosterdu.xenia.context.XeniaGraphQLContext

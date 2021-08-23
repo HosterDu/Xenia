@@ -25,4 +25,14 @@ data class Event(
     @OneToOne
     @JoinColumn(name = "Geolocation", referencedColumnName = "id")
     var location: Geolocation? = null,
-) : Node
+) : Node {
+    override fun toString(): String {
+        return "{ title: \"${title}\"," +
+                "description: \"${description}\", " +
+                "image: \"${image}\"," +
+                " startDate:\"${startDate}\"," +
+                " endDate:\"${endDate}\", " +
+                "lng: \"${location?.lng ?: 1}\"," +
+                "lat: \"${location?.lat ?: 1}\"}"
+    }
+}

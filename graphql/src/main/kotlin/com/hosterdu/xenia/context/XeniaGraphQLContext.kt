@@ -20,8 +20,7 @@ class XeniaGraphQLContext(val profile: Profile?, request: ServerRequest) : Sprin
 @Component
 class XeniaGraphQLContextFactory (val profileService: ProfileService): SpringGraphQLContextFactory<XeniaGraphQLContext>() {
     override suspend fun generateContext(request: ServerRequest): XeniaGraphQLContext {
-        println(ZonedDateTime.now())
-        val id =  ReactiveSecurityContextHolder.getContext() .map(SecurityContext::getAuthentication)
+        val id =  ReactiveSecurityContextHolder.getContext().map(SecurityContext::getAuthentication)
             .map(Authentication::getName).awaitSingle() ?: return XeniaGraphQLContext(null, request)
         val profile = profileService.findProfileById(id)
         return XeniaGraphQLContext(profile, request)

@@ -19,7 +19,7 @@ class ProfileService (
 
 
     fun findOrCreateProfile(profile: Profile): Profile {
-        return findProfileById(profile.id!!) ?: profileRepository.saveAndFlush(profile)
+        return findProfileById(profile.id) ?: profileRepository.saveAndFlush(profile)
     }
 
 }

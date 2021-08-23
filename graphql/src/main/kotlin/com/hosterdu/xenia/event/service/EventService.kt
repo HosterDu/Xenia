@@ -16,9 +16,6 @@ class EventService(val eventRepository: EventRepository, val geolocationReposito
     fun createEvent(event : CreateEventDto, profile: Profile?) : Event{
         val newEvent = event.toEvent()
         newEvent.creator = profile
-        println(event.startDate)
-
-        println(newEvent.startDate)
         if(newEvent.location != null){
             val geolocation = newEvent.location
            newEvent.location = geolocationRepository.saveAndFlush(geolocation!!)
