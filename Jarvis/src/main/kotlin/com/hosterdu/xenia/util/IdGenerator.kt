@@ -14,6 +14,10 @@ import java.util.*
 class IdGenerator : IdentifierGenerator {
 
     override fun generate(session: SharedSessionContractImplementor?, `object`: Any?): Serializable {
+        return createId()
+    }
+
+    fun createId() : String {
         val random = Random()
         val lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz"
         val upperCaseLetters = lowerCaseLetters.uppercase(Locale.getDefault())

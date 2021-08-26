@@ -16,7 +16,11 @@ class CustomSchemaGeneratorHooks : SchemaGeneratorHooks {
         Long::class -> graphqlLongTimeType
         else -> null
     }
-}
+    fun isCustomType(type : Class<*>) : Boolean = when (type) {
+        ZonedDateTime::class.java-> true
+        Long::class.java -> true
+        else -> false
+    }
 
 val graphqlZonedDateTimeType = GraphQLScalarType.newScalar()
     .name("ZonedDateTime")
@@ -50,4 +54,5 @@ object LongCoercing : Coercing<Long, String> {
     }
 
     override fun serialize(dataFetcherResult: Any?): String = dataFetcherResult.toString()
+    }
 }
