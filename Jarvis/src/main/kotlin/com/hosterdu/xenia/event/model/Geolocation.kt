@@ -13,6 +13,8 @@ data class Geolocation(
     @GeneratedValue(generator = "Nano_id")
     @Column(name="id")
     val id: String?,
-    val lat: Long,
-    val lng: Long,
+    val contextualName: String,
+    val type: GeoLocationType?,
+    val lat: Long?,
+    val lng: Long?,
 )

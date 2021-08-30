@@ -58,12 +58,11 @@ const Event = () => {
         </Heading>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input errors={errors} name='title' placeholder='Coachella Party' register={register} title='Event title' />
-          <Input errors={errors} name='lat' placeholder='1' register={register} title='Event location lat' />
-          <Input errors={errors} name='lng' placeholder='1' register={register} title='Event location lng' />
-          <Input errors={errors} name='picture' placeholder='https://coolimage.png' register={register} title='Event picture' />
-          <Input errors={errors} multiline name='description' placeholder='This party is gonna be lit...' register={register} title='Event description' />
-          <Input errors={errors} name='startDate' placeholder='2022-03-13T12:00:00+01:00' register={register} title='Event datetime start' />
-          <Input errors={errors} name='endDate' placeholder='2022-03-14T12:00:00+01:00' register={register} title='Event datetime end' />
+          <Input errors={errors} name='location.contextualName' placeholder='Place' register={register} title='Place' />
+          <Input errors={errors} name='picture' placeholder='https://coolimage.png' register={register} title='Picture' />
+          <Input errors={errors} multiline name='description' placeholder='This party is gonna be lit...' register={register} title='Description' />
+          <Input errors={errors} name='startDate' placeholder='2022-03-13T12:00:00+01:00' register={register} title='Start' />
+          <Input errors={errors} name='endDate' placeholder='2022-03-14T12:00:00+01:00' register={register} title='End' />
           <Button colorScheme='teal' isLoading={isSubmitting} mt={4} type='submit'>
             Submit
           </Button>
